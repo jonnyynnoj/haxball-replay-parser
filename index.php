@@ -2,6 +2,28 @@
 	<head>
 		<title>Haxball Replay Dumper</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		
+		<style type="text/css">
+			body {
+				font-family: Helvetica, Arial, sans-serif;
+				font-size: 13px;
+			}
+			
+			table {
+				border-collapse: collapse;
+				font-size: 13px;
+				width: 500px;
+			}
+			
+			table th {
+				text-align: left;
+			}
+			
+			table td {
+				border: 1px solid black;
+				padding: 5px;
+			}
+		</style>
 	</head>
 	
 	<body>
