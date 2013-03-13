@@ -235,20 +235,25 @@ while ($action->pos() < $action->size())
 	
 	$sender = $Players->get($action->parseUint());
 	
-	if (!isset($prevkicks[$sender]))
-	{
-		$prevkicks[$sender] = array('lastkick' => $replayTime, 'kicking' => false);
-	}
-	
 	$move = $action->dump();
 	
-	if ($move[0] != 'changeStadium')
+	if ($move[0] === 'discMove')
 	{
 		if (strpos($move[1], 'kick') !== false && !$prevkicks[$sender]['kicking'])
 		{
+			if (!isset($prevkicks[$sender]))
+			{
+				$prevkicks[$sender] = array('lastkick' => $replayTime, 'kicking' => false);
+			}
+			
 			$prevtime = $prevkicks[$sender]['lastkick'];
 			
-			$kicks[$sender][$formatted] = round($replayTime - $prevtime, 5);
+			$kicks[$sender][] = array(
+				'time'	=> $formatted,
+				'start'	=> $replayTime,
+				'held'	=> 0,
+				'diff'	=> round($replayTime - $prevtime, 5)
+			);
 			//$kicks[$sender][] = array($formatted, round($replayTime - $prevtime, 5));
 			
 			$prevkicks[$sender]['kicking'] = true;
@@ -256,6 +261,10 @@ while ($action->pos() < $action->size())
 		elseif (strpos($move[1], 'kick') === false && $prevkicks[$sender]['kicking'])
 		{
 			$prevkicks[$sender] = array('lastkick' => $replayTime, 'kicking' => false);
+			
+			// set time held for
+			$last = &$kicks[$sender][count($kicks[$sender]) - 1];
+			$last['held'] = $replayTime - $last['start'];
 			
 			//$kicks[$sender][count($kicks[$sender]) - 1][] = $formatted;
 		}
@@ -302,10 +311,38 @@ while ($action->pos() < $action->size())
 
 if ($showkicks)
 {
-	echo '<br /><br /><u>Kicks</u> (time of kick press => time since last kick release)<br />';
-	echo '<pre>';
-	print_r($kicks);
-	echo '</pre>';
+	// shortcuts
+	echo '<br /><br />';
+	
+	foreach ($kicks as $player => $notneeded)
+	{
+		echo '<a href="#', $player, '">', $player, '</a><br />';
+	}
+	
+	foreach ($kicks as $player => $pkicks)
+	{
+		echo '<br /><br /><u><a name="', $player, '">', $player, '</a> Kicks</u><br /><br />';
+		
+		echo '<table>';
+			echo '<tr>';
+				echo '<th>Started</th>';
+				echo '<th>Ended</th>';
+				echo '<th>Held for</th>';
+				echo '<th>Time since last kick</th>';
+			echo '</tr>';
+			
+			foreach ($pkicks as $k)
+			{
+				echo '<tr>';
+					echo '<td>', $k['time'], '</td>';
+					echo '<td>', udate('i:s:u', $k['start'] + $k['held']), '</td>';
+					echo '<td>', round($k['held'], 5), '</td>';
+					echo '<td>', $k['diff'], '</td>';
+				echo '</tr>';
+			}
+		
+		echo '</table>';
+	}
 }
 
 ?>
