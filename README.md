@@ -2,6 +2,10 @@
 
 Parses a [haxball](http://haxball.com) replay file
 
+```
+composer require jonnyynnoj/haxball-replay-parser
+```
+
 ## Usage
 
 ```php
