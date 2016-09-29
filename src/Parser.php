@@ -108,8 +108,6 @@ class Parser
         $discs = [];
         $num = $reader->readUInt32();
 
-        var_dump($num);exit;
-
         for ($i = 0; $i < $num; ++$i) {
             $discs[] = Disc::parse($reader);
         }
@@ -141,7 +139,6 @@ class Parser
     {
         $actions = [];
         $frame = 0;
-        $count = 0;
 
         while (!$reader->isEof()) {
             $newFrame = $reader->readUint8();
