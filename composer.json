@@ -1,0 +1,15 @@
+{
+    "name": "jonnyynnoj/haxball-replay-parser",
+    "description": "Parses a haxball replay file (.hbr)",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "ReplayParser\\": "src/"
+        }
+    },
+    "require": {
+        "php": ">=5.5",
+        "mdurrant/php-binary-reader": "dev-master"
+    }
+}
