@@ -17,7 +17,7 @@ class Goal implements \JsonSerializable
 
         $goal->setPosStart($reader->readDouble(), $reader->readDouble())
             ->setPosEnd($reader->readDouble(), $reader->readDouble())
-            ->setTeam(Stadium::parseTeam($reader->readUInt8()));
+            ->setTeam(Stadium::parseTeam($reader->readUInt8() ? 1 : 2));
 
         return $goal;
     }
@@ -63,5 +63,4 @@ class Goal implements \JsonSerializable
     {
         return $this->team;
     }
-
 }
