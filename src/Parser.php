@@ -87,7 +87,7 @@ class Parser
             $this->replay->setDiscs($this->parseDiscs($reader));
         }
 
-        $this->replay->setPlayers($this->parsePlayers($reader));
+        $this->replay->setStartPlayers($this->parsePlayers($reader));
 
         if ($this->replay->getVersion() >= 12) {
             $this->replay->setTeamColors($this->parseTeamColors($reader));

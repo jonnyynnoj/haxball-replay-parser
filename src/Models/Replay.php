@@ -8,7 +8,7 @@ class Replay implements \JsonSerializable
     private $totalFrames;
     private $roomInfo;
     private $discs = [];
-    private $players = [];
+    private $startPlayers = [];
     private $teamColors = [];
     private $actions = [];
 
@@ -20,7 +20,7 @@ class Replay implements \JsonSerializable
             'length' => $this->getLength(),
             'roomInfo' => $this->roomInfo,
             'discs' => $this->discs,
-            'players' => $this->players,
+            'startPlayers' => $this->startPlayers,
             'teamColors' => $this->teamColors,
             'actions' => $this->actions
         ];
@@ -75,15 +75,27 @@ class Replay implements \JsonSerializable
         return $this->discs;
     }
 
-    public function setPlayers(array $players)
+    public function setStartPlayers(array $startPlayers)
     {
-        $this->players = $players;
+        $this->startPlayers = $startPlayers;
         return $this;
     }
 
-    public function getPlayers()
+    public function getPlayers($includeJoined = true)
     {
-        return $this->players;
+        $players = $this->startPlayers;
+
+    	if ($includeJoined) {
+            $joinActions = array_filter($this->actions, function($action) {
+        		return $action->getType() == 'playerJoined';
+        	});
+
+        	foreach ($joinActions as $action) {
+        		$players[] = $action->getPlayer();
+        	}
+        }
+
+        return $players;
     }
 
     public function setTeamColors(array $colors)
