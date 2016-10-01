@@ -27,7 +27,7 @@ class DiscMove extends Action implements \JsonSerializable
     {
         return [
             'int' => $this->move,
-            'moves' => $this->getMovesTypes()
+            'moves' => $this->getMoveTypes()
         ];
     }
 

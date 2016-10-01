@@ -19,7 +19,7 @@ class PlayerJoined extends Action implements \JsonSerializable
         $player = new Player;
         $player->setId($reader->readUInt32())
             ->setName($reader->readStringAuto())
-            ->setIsAdmin($reader->readUint8())
+            ->setAdmin($reader->readUint8())
             ->setCountry($reader->readStringAuto());
 
         $action->setPlayer($player);
