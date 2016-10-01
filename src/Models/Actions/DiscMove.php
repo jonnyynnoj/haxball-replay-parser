@@ -8,11 +8,11 @@ use ReplayParser\Reader;
 class DiscMove extends Action implements \JsonSerializable
 {
     private static $moves = [
-        1 => 'up',
-        2 => 'down',
-        4 => 'left',
-        8 => 'right',
-        16 => 'kick'
+        'up' => 1,
+        'down' => 2,
+        'left' => 4,
+        'right' => 8,
+        'kick' => 16
     ];
 
     protected $type = 'discMove';
@@ -46,12 +46,37 @@ class DiscMove extends Action implements \JsonSerializable
     {
         $moves = [];
 
-        foreach (array_reverse(self::$moves, true) as $key => $mask) {
-            if ($this->move & $key) {
-                $moves[] = $mask;
+        foreach (array_reverse(self::$moves, true) as $move => $mask) {
+            if ($this->move & $mask) {
+                $moves[] = $move;
             }
         }
 
         return $moves;
+    }
+
+    public function movedUp()
+    {
+        return  ($this->move & self::$moves['up']) > 0;
+    }
+
+    public function movedDown()
+    {
+        return  ($this->move & self::$moves['down']) > 0;
+    }
+
+    public function movedLeft()
+    {
+        return  ($this->move & self::$moves['left']) > 0;
+    }
+
+    public function movedRight()
+    {
+        return  ($this->move & self::$moves['right']) > 0;
+    }
+
+    public function kicked()
+    {
+        return  ($this->move & self::$moves['kick']) > 0;
     }
 }
