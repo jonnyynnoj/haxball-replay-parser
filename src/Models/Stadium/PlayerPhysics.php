@@ -12,7 +12,17 @@ class PlayerPhysics implements \JsonSerializable
     private $acceleration;
     private $kickingAcceleration;
     private $kickingDamping;
-    private $kickingStrength;
+    private $kickStrength;
+
+    private $defaults = [
+        'bCoef' => 0.5,
+        'invMass' => 0.5,
+        'damping' => 0.96,
+        'acceleration' => 0.1,
+        'kickingAcceleration' => 0.07,
+        'kickingDamping' => 0.96,
+        'kickStrength' => 5
+    ];
 
     public static function parse(Reader $reader)
     {
@@ -20,27 +30,26 @@ class PlayerPhysics implements \JsonSerializable
 
         $physics->setBCoef($reader->readDouble())
             ->setInvMass($reader->readDouble())
-            ->setInvMass($reader->readDouble())
             ->setDamping($reader->readDouble())
             ->setAcceleration($reader->readDouble())
             ->setKickingAcceleration($reader->readDouble())
             ->setKickingDamping($reader->readDouble())
-            ->setKickingStrength($reader->readDouble());
+            ->setKickStrength($reader->readDouble());
 
         return $physics;
     }
 
     public function jsonSerialize()
     {
-        return [
-            'bCoef' => $this->bCoef,
-			'invMass' => $this->invMass,
-			'damping' => $this->damping,
-			'acceleration' => $this->acceleration,
-			'kickingAcceleration' => $this->kickingAcceleration,
-			'kickingDamping' => $this->kickingDamping,
-			'kickStrength' => $this->kickingStrength
-        ];
+        $data = [];
+
+        foreach ($this->defaults as $prop => $default) {
+            if ($this->$prop != $this->defaults[$prop]) {
+                $data[$prop] = $this->$prop;
+            }
+        }
+
+        return $data;
     }
 
     public function setBCoef($bCoef)
@@ -109,15 +118,14 @@ class PlayerPhysics implements \JsonSerializable
         return $this->kickingDamping;
     }
 
-    public function setKickingStrength($kickingStrength)
+    public function setKickStrength($kickStrength)
     {
-        $this->kickingStrength = (float) $kickingStrength;
+        $this->kickStrength = (float) $kickStrength;
         return $this;
     }
 
-    public function getKickingStrength()
+    public function getKickStrength()
     {
-        return $this->kickingStrength;
+        return $this->kickStrength;
     }
-
 }

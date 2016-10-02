@@ -30,15 +30,33 @@ class BallPhysics extends MaskedItem implements \JsonSerializable
 
     public function jsonSerialize()
     {
-        return [
-            'radius' => $this->radius,
-            'bCoef' => $this->bCoef,
-            'invMass' => $this->invMass,
-            'damping' => $this->damping,
-            'color' => $this->color,
-            'cMask' => $this->cMask,
-            'cGroup' => $this->cGroup
-        ];
+        $data = [];
+
+        if ($this->radius > 0) {
+            $data['radius'] = $this->radius;
+        }
+
+        if ($this->bCoef > 0) {
+            $data['bCoef'] = $this->bCoef;
+        }
+
+        if ($this->damping) {
+            $data['damping'] = $this->damping;
+        }
+
+        if ($this->color) {
+            $data['color'] = $this->color;
+        }
+
+        if (!empty($this->cMask)) {
+            $data['cMask'] = $this->cMask;
+        }
+
+        if (!empty($this->cGroup)) {
+            $data['cGroup'] = $this->cGroup;
+        }
+
+        return $data;
     }
 
     public function setRadius($radius)
