@@ -50,6 +50,12 @@ class Room implements \JsonSerializable
             ->setStadium(Stadium::parse($reader))
             ->setInProgress($reader->readUint8());
 
+        // for custom maps there's an extra amount of data here
+        // not sure what it does
+        if ($room->getStadium()->isCustom()) {
+            $reader->readBits(256);
+        }
+
         return $room;
     }
 

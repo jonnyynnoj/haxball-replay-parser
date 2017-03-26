@@ -8,7 +8,8 @@ class Reader extends BinaryReader
 {
     public function readDouble()
     {
-        return unpack('d*', strrev($this->readBytes(8)))[1];
+        $double = unpack('d*', strrev($this->readBytes(8)))[1];
+        return is_nan($double) ? 0 : $double;
     }
 
     public function readStringAuto()
