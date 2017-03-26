@@ -5,7 +5,7 @@ namespace ReplayParser\Models\Stadium;
 use ReplayParser\Reader;
 use ReplayParser\Models\Stadium;
 
-class Vertex extends MaskedItem implements \JsonSerializable
+class Vertex extends MaskedItem
 {
     private $x;
     private $y;

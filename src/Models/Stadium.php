@@ -12,7 +12,7 @@ use ReplayParser\Models\Stadium\PlayerPhysics;
 use ReplayParser\Models\Stadium\Segment;
 use ReplayParser\Models\Stadium\Vertex;
 
-class Stadium implements \JsonSerializable
+class Stadium implements ParseableModelInterface
 {
     private $name;
     private $custom = false;
@@ -104,7 +104,7 @@ class Stadium implements \JsonSerializable
         ];
 
         if ($this->isCustom()) {
-            $info = array_merge($info, [
+            $info += [
                 'bg' => $this->background,
                 'playerPhysics' => $this->playerPhysics,
                 'ballPhysics' => $this->ballPhysics,
@@ -112,7 +112,7 @@ class Stadium implements \JsonSerializable
                 'segments' => $this->segments,
                 'goals' => $this->goals,
                 'discs' => $this->discs
-            ]);
+            ];
         }
 
         return $info;

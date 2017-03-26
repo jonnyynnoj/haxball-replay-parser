@@ -4,22 +4,16 @@ namespace ReplayParser\Models;
 
 use ReplayParser\Reader;
 
-class TeamColor implements \JsonSerializable
+class TeamColor implements ParseableModelInterface
 {
-    /**
-     * @var int
-     */
+    /** @var int */
     private $angle;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $textColor;
 
-    /**
-     * @var array
-     */
-    private $stripes = array();
+    /** @var array */
+    private $stripes = [];
 
     /**
      * @param  Reader $reader
@@ -27,8 +21,7 @@ class TeamColor implements \JsonSerializable
      */
     public static function parse(Reader $reader)
     {
-        $model = new self;
-        $model->setAngle($reader->readUint16())
+        $model = (new self)->setAngle($reader->readUint16())
             ->setTextColor(dechex($reader->readUint32()));
 
         $numStripes = $reader->readUint8();
@@ -70,7 +63,6 @@ class TeamColor implements \JsonSerializable
     public function setAngle($angle)
     {
         $this->angle = $angle;
-
         return $this;
     }
 
@@ -89,7 +81,6 @@ class TeamColor implements \JsonSerializable
     public function setTextColor($textColor)
     {
         $this->textColor = $textColor;
-
         return $this;
     }
 
@@ -108,7 +99,6 @@ class TeamColor implements \JsonSerializable
     public function setStripes(array $stripes)
     {
         $this->stripes = $stripes;
-
         return $this;
     }
 

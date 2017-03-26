@@ -6,8 +6,6 @@ use ReplayParser\Reader;
 
 class Player implements \JsonSerializable
 {
-    private $version;
-
     private $id;
     private $name;
     private $admin;
@@ -23,9 +21,7 @@ class Player implements \JsonSerializable
 
     public static function parse(Reader $reader, $version)
     {
-        $player = new self($version);
-
-        $player->setId($reader->readUInt32())
+        $player = (new self)->setId($reader->readUInt32())
             ->setName($reader->readStringAuto())
             ->setAdmin($reader->readUInt8())
             ->setTeam($reader->readUInt8())
@@ -47,7 +43,7 @@ class Player implements \JsonSerializable
 
     public function jsonSerialize()
     {
-        $info = [
+        return [
             'id' => $this->id,
             'name' => $this->name,
             'admin' => $this->admin,
@@ -61,8 +57,6 @@ class Player implements \JsonSerializable
             'handicap' => $this->handicap,
             'discId' => $this->discId
         ];
-
-        return $info;
     }
 
     public function setId($id)

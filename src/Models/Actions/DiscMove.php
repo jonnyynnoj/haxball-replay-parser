@@ -57,26 +57,26 @@ class DiscMove extends Action implements \JsonSerializable
 
     public function movedUp()
     {
-        return  ($this->move & self::$moves['up']) > 0;
+        return ($this->move & self::$moves['up']) > 0;
     }
 
     public function movedDown()
     {
-        return  ($this->move & self::$moves['down']) > 0;
+        return ($this->move & self::$moves['down']) > 0;
     }
 
     public function movedLeft()
     {
-        return  ($this->move & self::$moves['left']) > 0;
+        return ($this->move & self::$moves['left']) > 0;
     }
 
     public function movedRight()
     {
-        return  ($this->move & self::$moves['right']) > 0;
+        return ($this->move & self::$moves['right']) > 0;
     }
 
     public function kicked()
     {
-        return  ($this->move & self::$moves['kick']) > 0;
+        return ($this->move & self::$moves['kick']) > 0;
     }
 }

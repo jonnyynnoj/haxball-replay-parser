@@ -3,8 +3,9 @@
 namespace ReplayParser\Models\Stadium;
 
 use ReplayParser\Reader;
+use ReplayParser\Models\ParseableModelInterface;
 
-class Background implements \JsonSerializable
+class Background implements ParseableModelInterface
 {
     private $type;
     private $width;
@@ -124,5 +125,4 @@ class Background implements \JsonSerializable
     {
         return $this->color;
     }
-
 }

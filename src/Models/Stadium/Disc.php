@@ -5,7 +5,7 @@ namespace ReplayParser\Models\Stadium;
 use ReplayParser\Reader;
 use ReplayParser\Models\Stadium;
 
-class Disc extends MaskedItem implements \JsonSerializable
+class Disc extends MaskedItem
 {
     private $posX;
     private $posY;

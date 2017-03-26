@@ -5,7 +5,7 @@ namespace ReplayParser\Models\Stadium;
 use ReplayParser\Reader;
 use ReplayParser\Models\Stadium;
 
-class Segment extends MaskedItem implements \JsonSerializable
+class Segment extends MaskedItem
 {
     private $v0;
     private $v1;
@@ -114,5 +114,4 @@ class Segment extends MaskedItem implements \JsonSerializable
     {
         return $this->color;
     }
-
 }

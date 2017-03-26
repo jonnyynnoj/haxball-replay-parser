@@ -3,8 +3,9 @@
 namespace ReplayParser\Models\Stadium;
 
 use ReplayParser\Reader;
+use ReplayParser\Models\ParseableModelInterface;
 
-class PlayerPhysics implements \JsonSerializable
+class PlayerPhysics implements ParseableModelInterface
 {
     private $bCoef;
     private $invMass;

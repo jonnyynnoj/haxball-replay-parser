@@ -5,7 +5,7 @@ namespace ReplayParser\Models\Stadium;
 use ReplayParser\Reader;
 use ReplayParser\Models\Stadium;
 
-class BallPhysics extends MaskedItem implements \JsonSerializable
+class BallPhysics extends MaskedItem
 {
     private $radius;
     private $bCoef;
@@ -15,17 +15,13 @@ class BallPhysics extends MaskedItem implements \JsonSerializable
 
     public static function parse(Reader $reader)
     {
-        $physics = new self;
-
-        $physics->setRadius($reader->readDouble())
+        return (new self)->setRadius($reader->readDouble())
             ->setBCoef($reader->readDouble())
             ->setInvMass($reader->readDouble())
             ->setDamping($reader->readDouble())
             ->setColor(dechex($reader->readUInt32()))
             ->setCMask(Stadium::parseMask($reader->readUInt32()))
             ->setCGroup(Stadium::parseMask($reader->readUInt32()));
-
-        return $physics;
     }
 
     public function jsonSerialize()

@@ -85,14 +85,14 @@ class Replay implements \JsonSerializable
     {
         $players = $this->startPlayers;
 
-    	if ($includeJoined) {
-            $joinActions = array_filter($this->actions, function($action) {
-        		return $action->getType() == 'playerJoined';
-        	});
+        if ($includeJoined) {
+            $joinActions = array_filter($this->actions, function ($action) {
+                return $action->getType() == 'playerJoined';
+            });
 
-        	foreach ($joinActions as $action) {
-        		$players[] = $action->getPlayer();
-        	}
+            foreach ($joinActions as $action) {
+                $players[] = $action->getPlayer();
+            }
         }
 
         return $players;

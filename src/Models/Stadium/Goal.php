@@ -4,8 +4,9 @@ namespace ReplayParser\Models\Stadium;
 
 use ReplayParser\Reader;
 use ReplayParser\Models\Stadium;
+use ReplayParser\Models\ParseableModelInterface;
 
-class Goal implements \JsonSerializable
+class Goal implements ParseableModelInterface
 {
     private $posStart;
     private $posEnd;

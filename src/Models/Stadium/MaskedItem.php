@@ -2,7 +2,9 @@
 
 namespace ReplayParser\Models\Stadium;
 
-class MaskedItem
+use ReplayParser\Models\ParseableModelInterface;
+
+abstract class MaskedItem implements ParseableModelInterface
 {
     protected $cMask;
     protected $cGroup;

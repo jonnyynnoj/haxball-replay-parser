@@ -5,11 +5,16 @@ namespace ReplayParser\Models;
 use ReplayParser\Models\Actions\NewPlayer;
 use ReplayParser\Reader;
 
-abstract class Action implements \JsonSerializable
+abstract class Action implements ParseableModelInterface
 {
     protected $type;
     protected $frame;
     protected $sender;
+
+    public static function parse(Reader $reader)
+    {
+        return new static;
+    }
 
     public function jsonSerialize()
     {
@@ -52,11 +57,6 @@ abstract class Action implements \JsonSerializable
     public function getType()
     {
         return $this->type;
-    }
-
-    public static function parse(Reader $reader)
-    {
-        return new static;
     }
 
     abstract protected function getData();

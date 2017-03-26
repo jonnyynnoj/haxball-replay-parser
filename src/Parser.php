@@ -2,6 +2,7 @@
 
 namespace ReplayParser;
 
+use ReplayParser\Exceptions\InvalidReplayException;
 use ReplayParser\Models\Player;
 use ReplayParser\Models\Replay;
 use ReplayParser\Models\Room;
@@ -26,7 +27,6 @@ use ReplayParser\Models\Actions\PlayerLeft;
 use ReplayParser\Models\Actions\PlayerTeamChange;
 use ReplayParser\Models\Stadium\Disc;
 use PhpBinaryReader\Endian;
-use InvalidArgumentException;
 
 class Parser
 {
@@ -42,14 +42,14 @@ class Parser
         DiscMove::class,
         PlayerTeamChange::class,
         ChangeTeamsLock::class,
-		ChangeGameSetting::class,
-		PlayerAvatarChange::class,
-		Desynced::class,
-		PlayerAdminChange::class,
-		ChangeStadium::class,
-		ChangePaused::class,
-		BroadcastPings::class,
-		PlayerHandicapChange::class,
+        ChangeGameSetting::class,
+        PlayerAvatarChange::class,
+        Desynced::class,
+        PlayerAdminChange::class,
+        ChangeStadium::class,
+        ChangePaused::class,
+        BroadcastPings::class,
+        PlayerHandicapChange::class,
         ChangeColors::class
     ];
 
@@ -62,11 +62,11 @@ class Parser
         $frames = $this->reader->readUInt32();
 
         if ($hbrpCheck !== 'HBRP') {
-            throw new InvalidArgumentException('Not a valid haxball replay!');
+            throw new InvalidReplayException('Not a valid haxball replay!');
         }
 
         if ($version < 7) {
-            throw new InvalidArgumentException('Replay must be at least version 7');
+            throw new InvalidReplayException('Replay must be at least version 7');
         }
 
         $this->replay = new Replay;
@@ -151,20 +151,16 @@ class Parser
             $type = $reader->readUint8();
 
             if (!isset(self::$actionTypes[$type])) {
-                throw new InvalidArgumentException('Action type ' . $type . ' invalid');
+                throw new InvalidReplayException('Action type ' . $type . ' invalid');
             }
 
             $class = self::$actionTypes[$type];
 
-            $action = $class::parse($reader)
+            $actions[] = $class::parse($reader)
                 ->setFrame($frame)
                 ->setSender($sender);
-
-            $actions[] = $action;
         }
 
         return $actions;
     }
-
-
 }
